@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh6qbljm0ikmc"]
+
+[ext_resource type="Texture2D" uid="uid://h2sau3aj7us3" path="res://assets/hitbox.png" id="1_m5rqh"]
+[ext_resource type="Script" uid="uid://bvrlnvrcjufjo" path="res://player_attack.gd" id="1_r8f3e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m5rqh"]
+radius = 32.0
+
+[node name="PlayerAttack" type="Area2D"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_r8f3e")
+
+[node name="Hitbox" type="Sprite2D" parent="."]
+texture = ExtResource("1_m5rqh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m5rqh")
