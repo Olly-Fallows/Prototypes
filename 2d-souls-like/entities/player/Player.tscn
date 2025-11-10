@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://c8fpox8mqcts6"]
+
+[ext_resource type="Script" uid="uid://dko5vf24i7o2m" path="res://entities/player/player.gd" id="1_g3lhm"]
+[ext_resource type="Script" uid="uid://chef3joplql1" path="res://entities/player/state_engine.gd" id="1_mab2k"]
+[ext_resource type="Script" uid="uid://37obykr6icpf" path="res://addons/stateengine/State.gd" id="2_453mm"]
+[ext_resource type="Script" uid="uid://l8q1od83bi7y" path="res://entities/player/idle.gd" id="2_eaotn"]
+[ext_resource type="Script" uid="uid://buo35nl7cyph0" path="res://entities/player/run.gd" id="3_g3lhm"]
+[ext_resource type="Script" uid="uid://h46tvgcgfkva" path="res://entities/player/attack.gd" id="5_fmb3c"]
+[ext_resource type="Texture2D" uid="uid://eqp2fwillqw" path="res://icon.svg" id="6_4pwj0"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_g3lhm")
+
+[node name="StateEngine" type="Node" parent="." node_paths=PackedStringArray("root", "current_state")]
+script = ExtResource("1_mab2k")
+root = NodePath("..")
+current_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://drnocxkgidode"
+
+[node name="Idle" type="Node" parent="StateEngine"]
+script = ExtResource("2_eaotn")
+transitions = Array[String](["Run", "Attack", "Dodge", "Parry", "Hit", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Run" type="Node" parent="StateEngine"]
+script = ExtResource("3_g3lhm")
+transitions = Array[String](["Idle", "Attack", "Dodge", "Parry", "Hit", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Attack" type="Node" parent="StateEngine"]
+script = ExtResource("5_fmb3c")
+transitions = Array[String](["Idle", "Run", "Dodge", "Parry", "Hit", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Dodge" type="Node" parent="StateEngine"]
+script = ExtResource("2_453mm")
+transitions = Array[String](["Idle", "Run", "Attack", "Parry", "Hit", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Parry" type="Node" parent="StateEngine"]
+script = ExtResource("2_453mm")
+transitions = Array[String](["Idle", "Run", "Attack", "Dodge", "Hit", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Hit" type="Node" parent="StateEngine"]
+script = ExtResource("2_453mm")
+transitions = Array[String](["Idle", "Dead"])
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Dead" type="Node" parent="StateEngine"]
+script = ExtResource("2_453mm")
+metadata/_custom_type_script = "uid://37obykr6icpf"
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(-2.3841858e-07, 0)
+scale = Vector2(0.37500003, 1)
+texture = ExtResource("6_4pwj0")
